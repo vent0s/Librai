@@ -6,3 +6,4 @@
 |---|---|---|---|
 | 2026-09-14 | 撰写 `README.md` 项目愿景初稿（本人审校后入库） | 文档初稿属繁琐工作；愿景内容全部来自本人已定的产品决策 | 仅限愿景文档；产品实现代码一律本人编写 |
 | 2026-09-14 | 配置 VS Code「DotNet」profile（安装 C# Dev Kit / EditorConfig / REST Client / 图标主题，写入 profile settings.json） | 开发环境工具链配置 | 仅编辑器配置，不涉及仓库内任何代码 |
+| 2026-09-16 | 在 VS Code「DotNet」profile 安装 Markdown All in One 扩展 | 开发环境工具链配置 | 仅编辑器配置，不涉及仓库内任何代码 |
