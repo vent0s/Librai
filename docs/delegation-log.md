@@ -1,9 +1,13 @@
-# 委托 AI 执行登记（LibrAI）
+# Delegation Log (LibrAI)
 
-按引导式开发规范登记委托 AI 执行的部分；委托产物一律不计入本人实操证据。
+Per the guided-development spec, all work delegated to AI is logged here. Delegated artifacts never count as first-hand implementation evidence.
 
-| 日期 | 委托内容 | 原因 | 覆盖范围 |
+| Date | Delegated work | Reason | Scope |
 |---|---|---|---|
-| 2026-09-14 | 撰写 `README.md` 项目愿景初稿（本人审校后入库） | 文档初稿属繁琐工作；愿景内容全部来自本人已定的产品决策 | 仅限愿景文档；产品实现代码一律本人编写 |
-| 2026-09-14 | 配置 VS Code「DotNet」profile（安装 C# Dev Kit / EditorConfig / REST Client / 图标主题，写入 profile settings.json） | 开发环境工具链配置 | 仅编辑器配置，不涉及仓库内任何代码 |
-| 2026-09-16 | 在 VS Code「DotNet」profile 安装 Markdown All in One 扩展 | 开发环境工具链配置 | 仅编辑器配置，不涉及仓库内任何代码 |
+| 2026-09-14 | Drafted the `README.md` project vision (reviewed and accepted by the author) | Tedious draft work; all vision content came from the author's own decisions | Vision document only; product code is always hand-written |
+| 2026-09-14 | Configured the VS Code "DotNet" profile (C# Dev Kit / EditorConfig / REST Client / icon theme; profile settings.json) | Dev-environment tooling | Editor configuration only; no repository code touched |
+| 2026-09-16 | Installed the Markdown All in One extension in the VS Code "DotNet" profile | Dev-environment tooling | Editor configuration only; no repository code touched |
+| 2026-09-20 | Drafted `AGENTS.md` (development mode / LLM protocol / delegation discipline from the author's established rules) | Process boilerplate; the rules were the author's existing decisions | Repository conventions document; reviewed and accepted by the author |
+| 2026-09-20 | Fixed three conceptual errors in Lecture 01 (independently compilable unit; where runtime configuration lives; when the sln is used), preserving the author's wording and spelling | Confirmed by the author as concept fixes, not rewrites | Three sentences in `docs/Lecture/dotnet/01-project-model.md` |
+| 2026-09-20 | Fixed nine spelling errors in implementation note 01-healthz | Author-requested spelling fixes (lectures keep typos by the author's decision; notes handled separately) | Spelling only; no sentence rewritten |
+| 2026-09-20 | Rewrote `AGENTS.md` in English and translated this log to English | The author's repository language policy: all documents in English | `AGENTS.md` and this log |
