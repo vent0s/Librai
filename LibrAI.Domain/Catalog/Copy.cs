@@ -37,5 +37,28 @@ namespace LibrAI.Domain.Catalog
             }
             Status = status;
         }
+
+        public void CheckOut()
+        {
+            if (Status != CopyStatus.Available)
+            {
+                throw new InvalidOperationException("Copy is not available for checkout.");
+            }
+            Status = CopyStatus.Loaned;
+        }
+
+        public void CheckIn(CopyStatus newStatus = CopyStatus.Available)
+        {
+            if (Status != CopyStatus.Loaned)
+            {
+                throw new InvalidOperationException("Copy is not currently loaned.");
+            }
+            if (!Enum.IsDefined(typeof(CopyStatus), newStatus) || newStatus == CopyStatus.Loaned)
+            {
+                throw new ArgumentException("Invalid status value for check-in.", nameof(newStatus));
+            }
+            Status = newStatus;
+        }
+
     }
 }

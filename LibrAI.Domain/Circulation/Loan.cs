@@ -48,5 +48,42 @@ namespace LibrAI.Domain.Circulation
             }
             ReturnedAt = returnedAt;
         }
+
+        public void Return(DateTime returnedAt)
+        {
+            // Check if the loan has already been returned
+            if (ReturnedAt != null)
+            {
+                throw new InvalidOperationException("Loan has already been returned.");
+            }
+            if (returnedAt < BorrowedAt)
+            {
+                throw new ArgumentException("ReturnedAt cannot be before BorrowedAt.", nameof(returnedAt));
+            }
+            if (Copy.Status != CopyStatus.Loaned)
+            {
+                throw new InvalidOperationException("Copy is not currently loaned.");
+            }
+            ReturnedAt = returnedAt;
+            Copy.CheckIn();
+        }
+
+        public void Renew(DateTime newDueAt)
+        {
+            // Check if the loan has already been returned
+            if (ReturnedAt != null)
+            {
+                throw new InvalidOperationException("Loan has already been returned.");
+            }
+            if (newDueAt <= DueAt)
+            {
+                throw new ArgumentException("New due date must be after the current due date.", nameof(newDueAt));
+            }
+            if (Copy.Status != CopyStatus.Loaned)
+            {
+                throw new InvalidOperationException("Copy is not currently loaned.");
+            }
+            DueAt = newDueAt;
+        }
     }
 }
