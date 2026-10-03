@@ -1,4 +1,5 @@
 using LibrAI.Api.NetServices;
+using LibrAI.Api.Repositories;
 using LibrAI.Domain.Catalog;
 
 // read configuration, prepare the application container

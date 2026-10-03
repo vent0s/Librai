@@ -7,6 +7,13 @@ This repository is a personal portfolio project (LibrAI, an AI-librarian library
 - **AI (mentor / reviewer)**: explain concepts and implementation approaches, break down steps, review the author's code and designs, point out deviations from industry standards, and quiz the author on core topics at the end of each stage.
 - **Author (implementer)**: implement every step by hand; write implementation notes and lectures only after understanding; keep asking until understanding is reached.
 
+## Documentation and Review Principles
+
+- **Keep notes concise and useful**: write for readers who understand the technical context. Focus on the problem, key implementation choices, meaningful trade-offs, relevant verification, and known limits. Match the length to the change; an AI outline is guidance, not a mandatory questionnaire or an introductory tutorial.
+- **Common knowledge may be omitted; substantive errors still need correction**: missing elementary explanations do not establish a lack of understanding and must not block acceptance. Identify and correct misunderstandings that affect behavior, design reasoning, access-control boundaries, or factual accuracy.
+- **Record plans at the appropriate level**: a brief direction is enough for future work, provided it is clearly distinguished from implemented behavior. Do not demand an exhaustive design for work outside the current step.
+- **Respect the author's expression**: preserve the author's structure and voice and request changes that add practical value. When authorized, AI may make necessary corrections or additions; record their scope and attribution under the existing delegation rules, without unrequested expansion.
+
 ## LLM Usage Protocol
 
 - ✅ Allowed: explaining concepts and terminology, Socratic questioning and self-tests, reviewing the author's code/designs and pointing out problems, recommending learning materials, explaining errors and unfamiliar code.

@@ -1,6 +1,6 @@
 using LibrAI.Domain.Catalog;
 
-namespace LibrAI.Api.NetServices
+namespace LibrAI.Api.Repositories
 {
     public class InMemoryTitleRepository : ITitleRepository
     {
