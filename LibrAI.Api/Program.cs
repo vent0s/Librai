@@ -1,3 +1,4 @@
+using LibrAI.Api.Contracts;
 using LibrAI.Api.NetServices;
 using LibrAI.Api.Repositories;
 using LibrAI.Domain.Catalog;
@@ -28,6 +29,23 @@ app.MapGet("/titles/{id}", async (string id, ITitleRepository titleRepository) =
     }
     return Results.Ok(title);
 });
-
+app.MapPost("/titles", async (CreateTitleRequest request, ITitleRepository titleRepository) =>
+{
+    if (request == null)
+    {
+        return Results.BadRequest("request is null");
+    }
+    if (string.IsNullOrWhiteSpace(request.Name) || string.IsNullOrWhiteSpace(request.ISBN) || string.IsNullOrWhiteSpace(request.Author))
+    {
+        return Results.BadRequest("Parameter is null or empty");
+    }
+    string id = Guid.NewGuid().ToString();
+    var title = new Title(id, request.Name, request.ISBN, request.Author, request.Description, request.Publisher);
+    if ((await titleRepository.TryAddAsync(title)))
+    {
+        return Results.Created($"/titles/{title.Id}", title);
+    }
+    return Results.Problem(statusCode: 500, detail: "Unable to create title.");
+});
 
 app.Run();

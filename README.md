@@ -35,7 +35,9 @@ Circulation core → concurrency & reservations → automated testing → AI lib
 
 ## Status
 
-🚧 Early development — vision and foundation stage. No runnable build yet; the roadmap above is the order of work.
+As of 2026-10-07, the local .NET 10 API supports health checks, title listing and lookup, and title creation. `POST /titles` validates required fields, generates a GUID, writes through a concurrent in-memory repository, and returns 201 with a Location header. Seed titles also use GUIDs. See the [title-creation verification record](docs/verification/2026-10-07-title-creation.md) for the completed smoke checks and their limits.
+
+Run from the repository root with `dotnet run --project LibrAI.Api --launch-profile http`, then use the listening URL printed by the application. Data is in memory and resets on restart. The author-written note for this step is pending; copy/loan repositories, circulation endpoints, persistence, authentication, a test suite, and the AI/UI features described above remain planned work.
 
 ## How it's built
 

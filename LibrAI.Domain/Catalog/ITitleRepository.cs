@@ -4,5 +4,6 @@ namespace LibrAI.Domain.Catalog
     {
         Task<IReadOnlyList<Title>> ListAsync();
         Task<Title?> GetByIdAsync(string id);
+        Task<bool> TryAddAsync(Title title);
     }
 }
