@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="LibrAI.Api/LibrAI.Api.csproj" />
   <Project Path="LibrAI.Domain/LibrAI.Domain.csproj" />
+  <Project Path="LibrAI.Infrastructure/LibrAI.Infrastructure.csproj" />
 </Solution>

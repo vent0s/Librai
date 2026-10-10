@@ -1,13 +1,24 @@
+using Microsoft.EntityFrameworkCore;
+using LibrAI.Infrastructure.Persistence;
 using LibrAI.Api.Contracts;
 using LibrAI.Api.NetServices;
-using LibrAI.Api.Repositories;
 using LibrAI.Domain.Catalog;
+using LibrAI.Infrastructure.Repositories;
 
 // read configuration, prepare the application container
 var builder = WebApplication.CreateBuilder(args);
 
 // register services in the application container
-builder.Services.AddSingleton<ITitleRepository, InMemoryTitleRepository>();
+builder.Services.AddScoped<ITitleRepository, TitleRepository>();
+builder.Services.AddScoped<ICopyRepository, CopyRepository>();
+// make dependency injection responsible for database context
+builder.Services.AddDbContext<LibraryDbContext>(options =>
+    //configurate PostgreSQL
+    options.UseNpgsql(
+        // load configuration named "Library"
+        builder.Configuration.GetConnectionString("Library")
+        )
+    );
 
 // assemble the web service
 var app = builder.Build();
@@ -47,5 +58,25 @@ app.MapPost("/titles", async (CreateTitleRequest request, ITitleRepository title
     }
     return Results.Problem(statusCode: 500, detail: "Unable to create title.");
 });
+app.MapGet("/copies/byTitle/{id}", async (string id, ICopyRepository copyRepository) =>
+{
+    var copies = await copyRepository.ListByTitleIdAsync(id);
+    if (copies == null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(copies);
+});
+app.MapGet("/copies/byId/{id}", async (string id, ICopyRepository copyRepository) =>
+{
+    var copy = await copyRepository.GetByIdAsync(id);
+    if (copy == null)
+    {
+        return Results.NotFound();
+    }
+    return Results.Ok(copy);
+});
+
+
 
 app.Run();

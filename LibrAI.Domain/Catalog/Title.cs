@@ -4,7 +4,7 @@ namespace LibrAI.Domain.Catalog
     {
         public string Id { get; private set; }
         public string Name { get; private set; }
-        public string ISBN { get; private set; }
+        public string Isbn { get; private set; }
         public string? Description { get; private set; }
         public string Author { get; private set; }
 
@@ -29,7 +29,7 @@ namespace LibrAI.Domain.Catalog
             {
                 throw new ArgumentException("ISBN cannot be null or empty.", nameof(isbn));
             }
-            ISBN = isbn;
+            Isbn = isbn;
             if (string.IsNullOrWhiteSpace(author))
             {
                 throw new ArgumentException("Author cannot be null or empty.", nameof(author));

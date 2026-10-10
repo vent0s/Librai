@@ -35,9 +35,32 @@ Circulation core → concurrency & reservations → automated testing → AI lib
 
 ## Status
 
-As of 2026-10-07, the local .NET 10 API supports health checks, title listing and lookup, and title creation. `POST /titles` validates required fields, generates a GUID, writes through a concurrent in-memory repository, and returns 201 with a Location header. Seed titles also use GUIDs. See the [title-creation verification record](docs/verification/2026-10-07-title-creation.md) for the completed smoke checks and their limits.
+As of 2026-10-10, stage two is in progress. The .NET 10 API uses EF Core/Npgsql repositories and PostgreSQL for titles and copies; the in-memory title repository has been removed. `InitialCatalog` and `AddCopies` create the required tables and relationship. Title creation and lookup persist across restarts, and implementation notes [04](docs/notes/04-title-creation.md) and [05](docs/notes/05-postgresql-persistence.md) are recorded.
 
-Run from the repository root with `dotnet run --project LibrAI.Api --launch-profile http`, then use the listening URL printed by the application. Data is in memory and resets on restart. The author-written note for this step is pending; copy/loan repositories, circulation endpoints, persistence, authentication, a test suite, and the AI/UI features described above remain planned work.
+The current Copy endpoints are `GET /copies/byId/{id}` and `GET /copies/byTitle/{id}`. Copy insertion is implemented in the repository but has no HTTP creation endpoint yet. Repository and query-endpoint checks passed in an isolated database; see [checkpoint verification](docs/verification/2026-10-10-copy-checkpoint.md), [title persistence checks](docs/verification/2026-10-09-postgresql-bootstrap.md), and [Copy migration checks](docs/verification/2026-10-09-copy-migration.md).
+
+This is an unfinished checkpoint. The copy-list endpoint returns `200 []` for an unknown title; its `copies == null` branch cannot handle an empty list. Route conventions and missing-title behavior still need review, followed by Copy creation and its implementation note. Loan persistence, borrowing/return/renewal endpoints, consistent ProblemDetails, structured application logging, stage-two self-assessment, and all later authentication/test-suite/AI/UI work remain unfinished. Temporary AI-operated checks are not an author-written automated test suite.
+
+## Local database on Windows
+
+Start Docker Desktop with its Linux engine. Create `.env` beside `compose.yaml` with `LIBRAI_DB_PASSWORD` set to a local development password; `.env` is Git-ignored.
+
+- Double-click [`start-db.bat`](start-db.bat) to start the `librai-dev` database service and wait for PostgreSQL readiness at `127.0.0.1:15432`.
+- Double-click [`stop-db.bat`](stop-db.bat) to stop that service while retaining its container and named data volume.
+- In a terminal or automation, use `start-db.bat --no-pause` or `stop-db.bat --no-pause` to return immediately after completion with an exit code. Both scripts locate the repository from their own directory.
+
+These helpers target Docker Desktop's `desktop-linux` context and the `db` service only. The stop helper can run without `.env`; it supplies a process-local placeholder solely to satisfy Compose interpolation and never changes the database password. Readiness checks do not replace authentication or application migration checks.
+
+For a new local development setup, configure `ConnectionStrings:Library` in API User Secrets. Use host `127.0.0.1`, port `15432`, database/user `librai`, and the same password as the database service. The `.env` file configures Compose; it does not configure the API connection string. Replace the placeholder below with your local password:
+
+```powershell
+dotnet user-secrets set "ConnectionStrings:Library" "Host=127.0.0.1;Port=15432;Database=librai;Username=librai;Password=<local-password>" --project LibrAI.Api
+dotnet tool restore
+dotnet ef database update --project LibrAI.Infrastructure --startup-project LibrAI.Api -- --environment Development
+dotnet run --project LibrAI.Api --launch-profile http
+```
+
+Use the listening URL printed by the API. A new database starts empty; there is no automatic in-memory seed. Stopping the database with the helper preserves its data volume.
 
 ## How it's built
 

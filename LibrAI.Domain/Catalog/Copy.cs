@@ -9,12 +9,18 @@ namespace LibrAI.Domain.Catalog
     }
     public class Copy
     {
-        public string Id { get; private set; }
-        public Title Title { get; private set; }
+        public string Id { get; private set; } = null!;
+        public Title Title { get; private set; } = null!;
+        public string TitleId { get; private set; } = null!;
 
 
 
         public CopyStatus Status { get; private set; }
+
+        private Copy()
+        {
+
+        }
 
         public Copy(string id, Title title, CopyStatus status)
         {
@@ -31,6 +37,7 @@ namespace LibrAI.Domain.Catalog
                 throw new ArgumentNullException(nameof(title), "Title cannot be null.");
             }
             Title = title;
+            TitleId = title.Id;
             if (!Enum.IsDefined(typeof(CopyStatus), status))
             {
                 throw new ArgumentException("Invalid status value.", nameof(status));
