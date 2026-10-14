@@ -58,16 +58,17 @@ app.MapPost("/titles", async (CreateTitleRequest request, ITitleRepository title
     }
     return Results.Problem(statusCode: 500, detail: "Unable to create title.");
 });
-app.MapGet("/copies/byTitle/{id}", async (string id, ICopyRepository copyRepository) =>
+app.MapGet("/titles/{titleId}/copies", async (string titleId, ICopyRepository copyRepository, ITitleRepository titleRepository) =>
 {
-    var copies = await copyRepository.ListByTitleIdAsync(id);
-    if (copies == null)
+    var title = await titleRepository.GetByIdAsync(titleId);
+    if (title == null)
     {
         return Results.NotFound();
     }
+    var copies = await copyRepository.ListByTitleIdAsync(titleId);
     return Results.Ok(copies);
 });
-app.MapGet("/copies/byId/{id}", async (string id, ICopyRepository copyRepository) =>
+app.MapGet("/copies/{id}", async (string id, ICopyRepository copyRepository) =>
 {
     var copy = await copyRepository.GetByIdAsync(id);
     if (copy == null)
