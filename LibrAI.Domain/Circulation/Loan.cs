@@ -4,13 +4,19 @@ namespace LibrAI.Domain.Circulation
 {
     public class Loan
     {
-        public string Id { get; private set; }
-        public Copy Copy { get; private set; }
+        public string Id { get; private set; } = null!;
+        public Copy Copy { get; private set; } = null!;
+        public string CopyId { get; private set; } = null!;
 
-        public string BorrowerId { get; private set; }
+        public string BorrowerId { get; private set; } = null!;
         public DateTime BorrowedAt { get; private set; }
         public DateTime DueAt { get; private set; }
         public DateTime? ReturnedAt { get; private set; }
+
+        public Loan()
+        {
+
+        }
 
         public Loan(string id, Copy copy, string borrowerId, DateTime borrowedAt, DateTime dueAt, DateTime? returnedAt = null)
         {
@@ -27,6 +33,7 @@ namespace LibrAI.Domain.Circulation
                 throw new ArgumentNullException(nameof(copy), "Copy cannot be null.");
             }
             Copy = copy;
+            CopyId = copy.Id;
             if (string.IsNullOrWhiteSpace(borrowerId))
             {
                 throw new ArgumentException("BorrowerId cannot be null or empty.", nameof(borrowerId));

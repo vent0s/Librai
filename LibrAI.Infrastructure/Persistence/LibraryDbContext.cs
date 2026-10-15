@@ -1,4 +1,5 @@
 using LibrAI.Domain.Catalog;
+using LibrAI.Domain.Circulation;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibrAI.Infrastructure.Persistence
@@ -12,6 +13,7 @@ namespace LibrAI.Infrastructure.Persistence
 
         public DbSet<Title> Titles => Set<Title>();
         public DbSet<Copy> Copies => Set<Copy>();
+        public DbSet<Loan> Loans => Set<Loan>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
